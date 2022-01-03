@@ -1,0 +1,1525 @@
+Setup:
+
+node js
+vs code
+...........................................................................................	
+
+
+es 6 && Typescript
+..................
+
+					Typescript
+..............................................................................................
+
+What is typescript?
+
+ Typescript is object oriented and functional style programming language.
+ Typescript that scales javascript.
+ scaling is nothing but expanding features.
+ Typescript is super set of Javascript.
+ Typescript is programming language to write javascript apps.
+
+Why Typescript?
+
+
+What is Javascript?
+
+ -Javascript is programming language.
+
+Styles of programming language
+ -Object oriented
+ -Procedure oriented
+ -Functional oriented
+ -Event driven
+
+Some languages designed with single style - c++,java,C#,c
+Some languages designed with multiple styles (hybrid) - Javascript,java 8,C#,Scala,Groovy,Kotiln....
+
+"Javascript is Object based,functional Style,Event driven programming language."
+
+
+Object Oriented Principles:
+...........................
+
+1.Abstraction
+2.Encapsulation
+3.Hierarchy
+4.Typing
+5.Modularity
+----------------------
+6.Concurrency
+7.Persistency
+
+if any language follows the first 5 prinicples 100% , those languages are called object
+oriented programming.
+
+java script does not follow the first 5 principles , so it is called as object based languge.
+
+
+functional pure vs style:
+
+-if any language follows 100% functional programming principles those languages are called
+"purely functional",if not functional style.
+.............................................................................................
+					Typing
+				     (Data Types)
+.............................................................................................
+
+classification of data types:
+
+1.Strongly typed /Static Typed
+
+ The type of variable is verified during compile time.
+ int a =100;
+ a=true;
+  This is compile time error.
+
+ eg:
+  c,C++,Java,C#....
+
+2.Weakly typed/ Dynamic Typed
+
+ Dynamic typed language / weak typed language -----Javascript
+        The type of variable is not verified during compile time, runtime verfication.
+
+ variable=value
+ var i=10;
+ i=true
+ i="hello"
+.............................................................................................
+
+JavaScript is not object oriented
+Javascript  is not strongly typed 
+
+.............................................................................................
+
+		Think: why js was designed to be dynamic typed?
+.............................................................................................
+
+Drawbacks of dynamic typing:
+    -We cant build enterprise consistent application.
+
+ -Object based 
+    if we  want to design , object oriented system in js not possible.
+
+Why javascript:
+  Javascript was created for process html pages.
+
+1989 - Web Project was started   
+
+1990 -  The first webserver,Browser was created
+
+1994 - Netscap started
+
+1995 - The first netscap navigator came to access web pages 
+
+1996 - Netscap decided to put java inside web browser.
+
+static web page- before netscap
+dynamic web page -netscap
+
+----Static web----- only hand coded html pages.
+
+1996 - CREATED Dynamic web : how to work with databases
+     - CGI - C,perl.
+ J2EE- Servlets,JSP
+ MS  - ASP
+ OPEN SOURCE - PHP.
+
+Netscap decided to build client side web technoloy- once html is rendered into web browser
+how to change that html onfly. 
+
+Netscap decided to create a new programming language, who recurited Brendan Eich
+,the programmer , asked to create new programming language for netscap navigator.
+
+-Objective of Project
+
+-It should be like java but it should not be java -light weight - scripting
+-deadline is 10 days.
+
+Time line:
+
+1.javascript project started 1995
+1.first name of the language was "Mocha"
+2.language was renamed to "Live Script" -1996
+3.language was renamed to "java Script" -1996
+............................................................................................
+				 ECMA
+...................................................................................
+
+Ecma International is an industry association dedicated to the standardization of information and communication systems.
+
+After language ready, which was submitted to standard body "ECMA international"
+
+1996---1997 : JS 1.0 =>ES 1.0
+
+1997- 1998 :  ES 2.0: It did not come
+
+1999 :  ES 3
+
+2007 : ES 4
+
+2008 : ES 5
+.....
+
+2012-2015 : ES 6
+........
+2016  ONWARDS : es 7,es 8, ............
+.............................................................................................
+				..............................................................................................
+			2008 - Introduction of  Node.js : Enter prise Javascript
+..............................................................................................
+in order to build enterprise javascript apps, community started thinking about "Object oriented Models".
+                      How to introduce object oriented features into language.
+..............................................................................................
+Fundamentally js is object based,type less language, then it is difficult to build object oriented systems.
+
+in order to create better javascript, 2009, The project was started to make javascript looks like other object oriented langugages.
+ 
+ - classes,interfaces,modules.... : Coffee script (intension was to introduce object oriented features like classes,interfaces).
+
+
+YOu write code in coffeescript
+
+Employee.coffee
+
+class Employee {
+
+}
+compiler - coffee Employee.coffe
+|
+Employee.js - compiled code -pure javascript 
+|
+run on browser
+
+
+Coffee script had issues still - Type system- No strongly typed.
+
+
+2010, Microsoft started project to create object oriented javascript using C#
+
+Objective of MS Project:
+
+ -Add Type System - Strong Typing
+ -Classes
+ -Modules
+ -interfaces
+ -encapulation keywords
+ .......
+C# ---compiler------plain javascript.
+
+MS Failed to port this project to public because
+
+Problems with C#
+ 1.PORTABLITY.
+ 2.COMPLEXITY
+.............................................................................................
+2010, Microsoft started project to create object oriented javascript using C#
+
+Objective of MS Project:
+
+ -Add Type System - Strong Typing
+ -Classes
+ -Modules
+ -interfaces
+ -encapulation keywords
+ .......
+C# ---compiler------plain javascript.
+
+MS Failed to port this project to public because
+
+Problems with C#
+ 1.PORTABLITY.
+ 2.COMPLEXITY
+.............................................................................................
+
+2012 - ECMA released new javascript spec (ES 6) in which They introduced
+  
+   - classes
+   - let 
+   - const
+   - advanced object literals
+   - Promises
+  etc..........
+
+MS decided to rewrite Typed Javascript project based "ECMA 6 Standards".
+
+MS Started redesigning the whole project, target ecma 6 as base language.
+
+{ES 6 + Static Typing + added new extra fetures} => The brith of Typescript.
+
+
+Arch of TS:
+
+					
+				      TS language
+					    |
+					  ES 6
+					    |
+					  ES 5
+
+
+Typescript----compile----Plain javascript
+
+Typescript is strongly typed, object oriented  javascript.
+
+Now you can use type script to build better object oriented systems using javascript.
+
+TS is not compititor or replacer for javascript but it complements js.
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Type script is a typed superset of javascript that compiles to plain javascript
+
+                  any browser,any host, any os, any device
+
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+				
+				ES 6 + Typescript	
+		
+
+
+Typescript features
+
+1.variable,datatypes
+2.classes
+3.interfaces
+4.encapsulation
+5.inheritance
+6.composition and dependency injection
+7.modularity
+8.meta programming using decorators(annotations)
+
+Typescript compiler
+
+
+Lab:
+
+Create Ts Project.
+How to write ts programs
+How to compile ts programs
+How to run compiled ts programs
+
+Steps:
+
+1.create basic project layout
+
+C:\session\ibm\2021\sep\ng-apps> mkdir ts-apps
+
+2.go to ts-apps folder
+
+C:\session\ibm\2021\sep\ng-apps>cd ts-apps
+
+C:\session\ibm\2021\sep\ng-apps/ts-apps>
+
+3.create package.json file
+
+C:\session\ibm\2021\sep\ng-apps/ts-apps> npm init -y
+
+4.create src folder 
+
+C:\session\ibm\2021\sep\ng-apps/ts-apps> mkdir src 
+
+5.install typescript compiler
+
+ npm install typescript --save-dev
+
+6.lanuch ide 
+C:\session\ibm\2021\sep\ng-apps/ts-apps> code .
+............................................................................................
+............................................................................................
+				Coding part
+
+1.how to create code
+
+2.how to compile code
+
+3.how to run code
+
+
+create ts programs - fileName.ts
+
+src/index.ts
+
+console.log("hello")
+
+compile ts program
+
+-add compiler config
+
+package.json
+
+ "compile": "tsc src/index.ts"
+
+>npm run compile
+
+-generates js file
+src/index.js
+
+->on browser
+
+lanuch webbrowser and see console
+<script src="src/index.js"></script>
+..............................................................................................
+syntax
+
+  tsc --compileroptions filename.ts
+
+compiler options can be supplied in line or in a file(tsconfig.json)
+
+Use case:
+
+Separate source code and compiled code into different directories.
+
+Use case:
+
+Separate sourcode and compiled code into different directories.
+
+source code
+ src
+   -index.ts
+
+ build
+    -index.js
+
+how to tell the compiler to place compiled code into build folder.
+
+compiler options:
+
+ syntax
+
+  tsc --compileroptions filename
+
+  tsc --outDir build   src/index.ts
+
+package.json
+{
+  "name": "mytsapps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile" : "tsc --outDir build   src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^3.9.5"
+  }
+}
+
+index.html
+<body>
+    <h1>Typescript apps</h1>
+    <script src="build/index.js"></script>
+</body>
+...........
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Use case: if i write code ,every time i need to compile program mannually how to avoid that.
+
+ we compiler option 
+   --watch
+
+ "scripts": {
+    "build" : "tsc  --watch --outDir build   src/index.ts"
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+what if i want to add more and more compiler options
+
+
+tsc --watch --outDir build  --options --options  src/index.ts
+  
+ This is not scaleable, and maintainable. , if configuration grows.
+
+Solution : 
+ we need to create simple ts config file where you can place all configurations.
+
+create file called
+ tsconfig.json outside src folder, where we can tell all compiler options
+
+tsconfig.json
+{
+    "compilerOptions": {
+        "outDir": "build",
+        "watch": true
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "files": [
+        "src/index.ts"
+    ]
+}
+
+package.json
+{
+  "name": "tsapps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile" : "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}
+			..............................................................................................
+					Typescript core concepts
+..............................................................................................
+ES 6 core concepts:
+
+Variable delcaration;
+
+var - es 5
+let  - es6 
+const - es6
+
+var is not block scoped and let and const is block scoped.
+
+In ES6 APPS  let and const are recommended.
+
+The problems with ES 6:
+
+When es6 was introduced, the node and browsers vendors were not ready to accept
+es6 keywords
+
+let ,const never work in older node and browsers.
+
+that time browers were supported only ES 5 version of js.
+
+browsers were not ready that time, but develoers felt,and supported lot on es6.
+
+Then how to run es 6 code on browsers which dont support.
+
+The birth of "Transpilers"  : a special compilers which converts es6 to es5,
+
+developer write code in es6 ---->transpiler-->es 5
+
+Type script code is written based on ES 6 code only.
+
+eg: babel.js 
+ higer version -to lower version
+
+eg : tsc
+ es6 to es5
+ +
+ type verification
+
+         "ts compiler by default converts es6 code into es5."
+
+let---------var
+
+{
+    "compilerOptions": {
+        "outDir": "build",
+        "watch": true,
+        "target" :"ES6"
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "files": [
+        "src/index.ts"
+    ]
+}
+..............................................................................................
+			 Type Script and Data types -  Strong typing
+..............................................................................................
+
+Java
+
+int a =10; 
+ 
+a="hello" - compile time error
+
+In ts
+
+var | let |const  variable:type = literal
+
+let a:number=10;  
+ the variable a can hold only number, other than number compiler will throw error.
+
+Literals:
+ since js is dynamic typed, types of the variable is identified during runtime based on literal(values)
+
+1.number
+2.string
+3.boolean
+4.undefined
+5.NaN
+6.infinity
+7.null
+8.function
+9.object
+
+Js types:
+1.number
+   number,NaN,infinity
+2.string
+3.undefined
+4.function
+5.object
+   object,null
+6.boolean
+
+TS has created strong data types based on the above types 
+
+Type script offers the follow type annotations
+
+primitive datatypes
+1.string
+2.number
+3.boolean
+
+Object types:
+
+Object
+Array
+Enum
+
+Other types
+void
+any
+unknown
+Function
+
+
+Syntax  of strongly typed
+
+var/let/const variable:type = literal
+
+int a =10;
+
+a = "hello" ;;compiler will throw error : compile time vertification.
+
+//string 
+
+let firstName: string = "Hello";
+let lastName:string =100
+
+[12:37:50 pm] File change detected. Starting incremental compilation...
+
+src/index.ts:4:5 - error TS2322: Type 'number' is not assignable to type 'string'.
+
+4 let lastName:string =100;
+      ~~~~~~~~
+
+[12:37:51 pm] Found 1 error. Watching for file changes.
+
+
+.........................................................................................
+
+Basic types:
+
+//string
+let firstName: string = "Subramanian"
+//number
+let age: number = 41;
+//boolean
+let isValid: boolean = true;
+
+//if you reinitalize the variable
+
+//firstName =100; //error here
+.............................................................................................
+
+
+Type erasor/:
+ Types will be erased after compilation; any ts specific notations will not be available 
+after code is compiled.
+
+
+Ways of type declaration :
+
+1.expilicit
+  let variableName:type = value
+  let firstName:string ="Subramanian"
+
+2.implicit : Type inference
+
+   if any variable is assigned with specific type value
+
+ let variableName = value
+
+
+
+//Explicit type declaration
+
+let firstName:string ="Subramanian"
+firstName ="Ram"
+//firstName =100;
+
+
+//Type inference:impilicit type declaration
+let lastName= "Murugan" //last Name is assigned with string,
+lastName = "foo"
+//lastName =100
+
+let price =100;
+price=9000;
+//price =true
+.............................................................................................
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+Typescript compiler and compile time errors:
+
+
+-if any compile time error found, the compiler will show error, starts transpiling the code
+ -default behaviour
+ 
+what if i want to enforce if there is any compile time, dont emmit code
+
+ "noEmitOnError":true
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+Typescript compiler and compile time errors:
+
+
+-if any compile time error found, the compiler will show error, starts transpiling the code
+ -default behaviour
+ 
+what if i want to enforce if there is any compile time, dont emmit code
+
+ "noEmitOnError":true
+
+////////////////////////////////////////////////////////////////////////////////////////////
+					any and implicity undefined
+////////////////////////////////////////////////////////////////////////////////////////////
+
+//no value , no type
+//a type is implicit undefined, so that we can initalize any value at any time
+let a;
+a = 100
+a = "hello"
+
+//if you want javascript like syntax, if you dont know any type or variable need to hold any value
+
+let b: any
+b = 100
+b = "hello"
+..............................................................................................
+/////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+//const vs let
+
+//let is reassignable
+
+let a = 100;
+console.log(a);
+a =900;
+console.log(a);
+
+const pi=3.14;
+console.log(pi);
+//pi=90.89 //error
+.............................................................................................
+..............................................................................................
+..............................................................................................	
+				Functions
+			 (args,parameters,return values)
+..............................................................................................
+
+..............................................................................................	
+				Functions
+			 (args,parameters,return values)
+..............................................................................................
+
+How to declare function, call?
+
+//functions declaration
+function  sayGreet(){
+    //logic
+    console.log('Hello , How are you?')
+}
+//function invocation
+sayGreet()
+..........................................................................................
+
+Args and parameters
+...................
+
+
+//name is arg
+function sayGreet(name) {
+    console.log(`Hello ${name}`)
+}
+//Subramanian is parameter
+sayGreet('Subramanian');
+//here we pass value 100, based on value type, type inference is enabled.
+sayGreet(100);
+
+function sayHello(name: string) {
+    console.log(`Hello ${name}`);
+}
+sayHello('Subramanian');
+//sayHello(1000) //error
+
+//default args : es 6 feature
+function multiply(a: number = 0, b: number = 0) {
+    let c = a * b;
+    console.log(`Multiply ${c}`)
+}
+multiply(10, 20)
+multiply();
+
+//optional args
+function setValues(name?: string, age?: number, city?: string) {
+    console.log(`name : ${name} age:${age} city :${city}`)
+}
+setValues('Subramanian', 41, 'Coimbatore')
+setValues()
+
+function setStocks(name: string, price: number = 0, qty?: number) {
+    console.log(`name : ${name} price:${price} qty :${qty}`)
+}
+setStocks('google');
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+//functions
+
+function sayHello() {
+    console.log("Hello")
+}
+sayHello();
+
+//parameterss and args
+
+//name is arg
+function sayHai(name: string) {
+    console.log(`name ${name}`)
+}
+//subramanian - parameter
+sayHai('Subramanian');
+// sayHai(100);
+
+//return value
+function getName(): string {
+    return 'Subramaian';
+}
+console.log(getName())
+
+//default args : es 6 features
+function add(a: number = 0, b: number = 0): number {
+    console.log(`a ${a} b ${b}`)
+    return a + b;
+}
+
+console.log(add(10, 10))
+console.log(add())
+console.log(add(5))
+console.log(add(undefined, 5))
+
+//optional parameters : ts feature
+function multiply(a?: number, b?: number): number {
+    console.log(`a ${a} b ${b}`)
+    return a * b;
+}
+console.log(multiply(10, 10))
+console.log(multiply())
+
+//void
+function doStuff(): void {
+    console.log("doStuff")
+}
+//any
+function transform(a: any, b: any): any {
+    console.log("doStuff")
+}
+transform("a", "b")
+transform("a", "b")
+/////////////////////////////////////////////////////////////////////////////////
+
+//Arrow functions : es 6 feature
+//Arrow funciton is short cut for function literals
+
+//anonmous functions
+let sayGreet = function (name: string = "foo") {
+    return `Hello ${name}`;
+}
+console.log(sayGreet('bar'))
+//anonmous functions in es 6 :Arrow function
+sayGreet = (name: string = "foo") => {
+    return `Hello ${name}`;
+}
+console.log(sayGreet('bar'))
+
+//function has only one line of body : we can remove {} and return statement
+sayGreet = (name: string = "foo"):string => `Hello ${name}`;
+console.log(sayGreet('bar'))
+..............................................................................................
+				Union types
+.............................................................................................
+
+
+function args type can be mixed ; either this or that
+
+for eg : id variable may be string or number - 
+
+ id: string | number | myType | ....
+
+
+//union types
+function printId(id: number | string) {
+    console.log("Your ID is: " + id);
+}
+printId(100)
+printId("100")
+// printId(true)
+
+function printIdV1(id: number | string) {
+    //  console.log(id.toUpperCase());
+    //narrowing code
+    if (typeof id === "string") {
+        // In this branch, id is of type 'string'
+        console.log(id.toUpperCase());
+    } else {
+        // Here, id is of type 'number'
+        console.log(id.toFixed());
+    }
+}
+printIdV1("abc")
+printIdV1(123)
+				.............................................................................................
+				Object oriented Programming
+............................................................................................
+
+state initalization(instance variable init):
+
+1.direct -hardcoded
+2.after object creation
+3.during object creation - constructor parameters and args
+
+
+Direct Hardcoded:
+//state -instance variable initalization ; 
+
+class Employee {
+    //direct hardcoded: inside class 
+    id: number = 1
+    name: string = "Subramanian"
+    //methods
+    calculate(): number {
+        return 100;
+    }
+
+}
+//emp is just reference variable
+let emp: Employee = new Employee();
+console.log(emp.id,emp.name,emp.calculate())
+
+
+2.after object creation
+
+class Employee {
+    //direct hardcoded: inside class 
+    id: number = 1
+    name: string = "Subramanian"
+    //methods
+    calculate(): number {
+        return 100;
+    }
+
+}
+//emp is just reference variable
+let emp: Employee = new Employee();
+//after object creation
+emp.id =900;
+emp.name = "Ram"
+console.log(emp.id,emp.name,emp.calculate())
+3.Via constructor
+class Employee {
+    id: number
+    name: string
+    //constructor
+    constructor(id: number = 0, name: string = "") {
+        this.id = id;
+        this.name = name;
+    }
+    //methods
+    calculate(): number {
+        return 100;
+    }
+
+}
+//new Employee() -constructor call
+let emp: Employee = new Employee();
+
+console.log(emp.id, emp.name, emp.calculate())
+
+//constructor parameters
+emp = new Employee(12, "Ram");
+
+console.log(emp.id, emp.name, emp.calculate())
+
+.............................................................................................
+
+...............................................................................................					null
+.............................................................................................
+
+null means no object is initalized to a variable.
+
+?. - Safe navigation operator
+
+?? - elivish operator to give fallback message incase if the reference is either null or undefined.
+
+
+//null : the variable is not going to hold any object.
+
+//typescript and null handling Without runtime error
+
+class Employee {
+    id: number = 8888;
+}
+
+let emp = null;
+
+// emp = new Employee();
+
+//cause null runtime error
+//console.log(emp.id)
+
+//ts brought new operator to avoid runtime error : safe navigation operator
+//which converts null into undefined
+console.log(emp?.id)
+
+//how to display undefined in meaningfull value
+
+//using tenary operator
+console.log(emp?.id ? emp.id : 0)
+
+//using elvish operator :short cut of tenary operator
+console.log(emp?.id ?? 0)
+
+.............................................................................................
+				 Encaspulation
+.............................................................................................
+Encapsulation:
+..............
+To Prevent code sharing from one code to another.
+
+code - collection of classes, variables,functions,......
+
+code is represented inside file.
+
+pl provides keywords to ensure that , how  we can allow the code to be shared
+
+TS provides keywords to prevent code sharing
+ 
+ -public - any where
+ -private - with in class 
+ -protected - with in class + inheritance
+
+only class members are public/private/protected.
+
+---if you declare any member(var,methods) => by default is public.
+
+
+
+public:
+
+//public  : implicit, explicit public
+
+class Employee {
+    //just declare variable
+    public id: number
+    //default is public
+    name: string
+    public isWorking: boolean;
+    //constructor args variables ; local variables
+    constructor(id: number, name: string = "foo", isWorking: boolean = false) {
+        this.id = id;
+        this.name = name;
+        this.isWorking = isWorking;
+    }
+    //instance methods
+    public calculateSalary(): number {
+        return 1000;
+    }
+}
+let emp = new Employee(1, "subramanian", true);
+
+console.log(emp.id, emp.name, emp.isWorking, emp.calculateSalary())
+...........................................................................................
+
+private : we cant access out side classes
+
+class Auth {
+    private password: string = "abcd000"
+
+    private generatePassword() {
+        return this.password;
+    }
+    public getPassword() {
+        return this.generatePassword();
+    }
+}
+let auth = new Auth()
+// console.log(auth.password)
+// console.log(auth.generatePassword())
+console.log(auth.getPassword())
+.............................................................................................
+.............................................................................................
+				Variables Types
+
+
+1.instance variable
+  variable declared inside class
+2.local variables
+  variables are declared inside method(including constructor)
+  or method args / constructor args
+3.static variables
+ variables delcared inside class with static modifier
+
+
+// class Employee {
+//     //instance variables
+//     id: number;
+//     name: string;
+//     //id,name is local variable
+//     constructor(id: number, name: string) {
+//         //instancevariable:localvariable
+//         this.id = id;
+//         this.name = name;
+//     }
+// }
+
+// class Employee {
+//     //id,name is local variable
+//     //constructor local variables can be converted into instance variables
+//     //by adding public/private keywords
+//     constructor(public id: number, public name: string) {
+//         //instancevariable:localvariable
+//         this.id = id;
+//         this.name = name;
+//     }
+// }
+
+class Employee {
+     constructor(public id: number, public name: string) { }
+}
+let emp = new Employee(1, 'ram');
+console.log(`id : ${emp.id} name ${emp.name}`)
+.............................................................................................
+			.............................................................................................
+		Hierachy : HAS-A dependency injection && is-a : inheritance
+..............................................................................................
+	
+
+//has -a 
+class OrderService {
+    constructor() {
+
+    }
+    public findAllOrders(): string {
+        return "List of Orders"
+    }
+}
+
+class OrderController {
+    //has-a
+    constructor(private orderService: OrderService) { }
+    
+    findAll(){
+        return this.orderService.findAllOrders();
+    }
+}
+
+class UserService {
+    
+}
+let orderCtrl = new OrderController(new OrderService());
+
+//let orderCtrl = new OrderController(new UserService());
+
+console.log(orderCtrl.findAll())
+
+.............................................................................................		..............................................................................................
+				Inheritance
+
+Types of Inheritance implementation:
+
+1.concrete class 
+2.interfaces - Only In Ts
+3.abstract classes - Only in Ts
+
+
+//base class
+class Account {
+    constructor() {
+        console.log('account class')
+    }
+    protected deposit() {
+        return 10;
+    }
+}
+class SavingsAccount extends Account {
+    constructor() {
+        super()
+    }
+    //overriding
+    public deposit() {
+        return 1000 * super.deposit();
+    }
+}
+let sb = new SavingsAccount()
+console.log(sb.deposit())
+
+...........
+//base class
+interface Account {
+    deposit(amount: number): number
+}
+interface Calculator {
+    calculate(amount: number): number
+}
+
+class SavingsAccount implements Account, Calculator {
+    constructor() {
+    }
+    calculate(amount: number): number {
+        return amount * 10
+    }
+    //overriding
+    public deposit(): number {
+        return 1000;
+    }
+}
+let sb = new SavingsAccount()
+console.log(sb.deposit())
+..........................................................................................
+
+//base class
+abstract class Account {
+    public getAccountInfo() {
+        return 'AccountInfo'
+    }
+    abstract deposit();
+    abstract withdraw();
+}
+class SavingsAccount extends Account {
+    constructor() {
+        super()
+    }
+    //overriding
+    public deposit() {
+        return 1000
+    }
+    withdraw() {
+        return 300;
+    }
+}
+let sb = new SavingsAccount()
+console.log(sb.deposit(),sb.withdraw(),sb.getAccountInfo())
+
+.............................................................................................	
+					Arrays and Generics
+.............................................................................................
+
+Generics are typed collections.
+Generics Syntax 
+<Type>
+
+
+
+.............................................................................................	
+					Arrays and Generics
+.............................................................................................
+
+
+1.Arrays
+array can hold collection of values.
+
+-It is built in object
+-It is basic dyanamic ds.
+-It can hold any type of data.
+
+I want to store array of numbers.
+
+1.normal syntax
+         let list:number[] = [1,2,3,4];
+
+2.generics syntax <>
+  
+     let list:Array<number> = [1,2,3,4];
+				
+
+let list: number[] = [1, 2, 3, 4];
+
+let nums:Array<number> = [1,2,3,4];
+
+class Employee {
+    id: number;
+    name: string;
+}
+let empList: Array<Employee> = [{ id: 1, name: 'a' }, { id: 1, name: 'b' }];
+
+Built in generics Types:
+-Promises
+-Array
+-Observable
+...............................................................................................
+
+
+..............................................................................................
+					Object Types
+..............................................................................................
+
+literal objects:
+
+let user = { 
+   id:1,
+   name:'Subramanian'
+}
+
+Object types if you want to define we have lot of patterns
+
+1.class - class can act as type
+2.interface -interface can act as type
+3.type keyword 
+
+
+
+//object types
+
+//class as type
+// class User {
+//     id: number;
+//     name: string;
+//     city?:string; 
+//     state?:string;
+//     country?:string;    
+// }
+
+//interface as type
+// interface User {
+//     id: number;
+//     name: string;
+//     city?:string; 
+//     state?:string;
+//     country?:string;    
+// }
+
+//type keyword as type
+type User = {
+    id: number | string;
+    name: string;
+    city?: string;
+    state?: string;
+    country?: string;    
+}
+let user: User = {
+    id: 1,
+    name: 'Subramanian',
+    city: 'Coimbatore'
+}
+..........................................................................................
+
+
+..........................................................................................
+					Enum - 
+
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+console.log(Direction.Up)
+console.log(Direction.Down)
+
+enum UserResponse {
+    No = 0,
+    Yes = 1,
+}
+
+function respond(recipient: string, message: UserResponse): void {
+    // ...
+    console.log(recipient, message)
+}
+
+respond("Princess Caroline", UserResponse.No);
+..............................................................................................
+				  Decorators-Annotations
+..............................................................................................
+
+
+
+annotations: @annotation , @Override,@Entity,@Controller
+
+-meta programming : isloate the code logic from main program to ouside, when you 
+req, you inject those features , into code during runtime.
+
+Decorators are experimental feature in es7. but ts added this language with experimental
+mode.
+
+What is decorator ?
+
+ It is simple javascript function.
+
+How to create our own decorators?
+
+
+//decorator
+//target variable holds the reference on which the decorator is attached
+function Course(target: any) {
+    //decorator logic
+    Object.defineProperty(target.prototype, "subject", { value: 'Node.js' })
+}
+
+//attach decoractor
+@Course
+class Student {
+    constructor(public name: string) { }
+}
+//
+let student = new Student("Ram") as any;
+console.log(`The Student ${student.name} is learning ${student.subject} `)
+
+
+
+
+function Course(input: any) {
+    return function (target:any) {
+        //decorator logic
+        Object.defineProperty(target.prototype, "subject", { value: input })
+    }
+
+}
+
+//attach decoractor
+@Course('Node.js with MicroService')
+class Student {
+    constructor(public name: string) { }
+}
+//
+let student = new Student("Ram") as any;
+console.log(`The Student ${student.name} is learning ${student.subject} `)
+
+
+@Course('Node.js with MicroService')
+class Teacher {
+    constructor(public name: string) { }
+}
+//
+let teacher = new Teacher("Subramanian") as any;
+console.log(`The Teacher ${teacher.name} is teaching ${teacher.subject} `)
+.............................................................................................
+				Object Destructuring
+.............................................................................................
+
+//Object destructuring
+
+// function getEmployee(employee) {
+//     console.log(employee.id, employee.name)
+// }
+// function getEmployee(employee) {
+//     const { id, name } = employee;
+//     console.log(id, name)
+// }
+// const getEmployee = (employee) => {
+//     const { id, name } = employee;
+//     console.log(id, name)
+// }
+const getEmployee = ({ id, name }) => console.log(id, name)
+let employee = {
+    id: 1,
+    name: 'Subramanian'
+}
+getEmployee(employee);
+/////////////////////////////////////////////////////////////////////////////////////
+
+//return value
+let getStock = () => {
+    return {
+        id: 1,
+        Symbol: 'google',
+        price: 100
+    }
+}
+console.log(getStock())
+
+// let getStocks = (id: number, symbol: string, price: number) => {
+//     return {
+//         id: id,
+//         symbol: symbol,
+//         price: price
+//     }
+// }
+// let getStocks = (id: number, symbol: string, price: number) => {
+//     return {
+//         id,
+//         symbol,
+//         price
+//     }
+// }
+let getStocks = (id: number, symbol: string, price: number) => ({
+    id,
+    symbol,
+    price
+})
+console.log(getStocks(1, 'ms', 100))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
