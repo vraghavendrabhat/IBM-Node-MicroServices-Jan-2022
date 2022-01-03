@@ -1,0 +1,161 @@
+					Node.js
+What is Node.js?
+
+  Node.js is platform and runtime for javascript lang.
+
+Platform: collection of tools
+Runtime: Execution engine where javascript can be executed..
+
+
+
+Why Node.js?
+
+History of Node.js:
+
+Ryan Dahl who created Node.js.
+When he was doing phd in math, who got bored in math , so who
+started working on different project by looking the project "flicker" , he was thinking how flicker uploades photos into server.
+
+He attended conference "nginx" conference where who insipred "Non Blocking" Web Server.
+
+He started thinking how to build nginx like server to build web application -  non blocking webservers.
+
+He was thinking how to put java language, but java language was not ready for non blocking computing.Why cant use "javascript", javascript inside browser is non blocking language.
+
+The same time, google published "open source javascript runtime" called v8.
+
+Ryan thought using v8 we can build arch for building non blocking web servers.===>Node.js
+..............................................................................................
+			Node.js was created to built NonBlocking Network Apps
+..............................................................................................
+
+What is Exactly Non Blocking , Blocking? 
+  
+IO,Threads
+
+What is IO? How IO Works underneeth?
+
+
+File Descriptor:
+................
+
+-FD is a datastructure presented inside os kernal at very low level
+-FD is mapper between os and hardware layer
+-FD is entry and exit point of os with IO layer
+-FD is simple c program.
+-FD is broker for io between applications and io os layer
+
+Process:
+ File Descriptor is simple c programming, getting loaded into memory once the process inthe
+application is started.
+
+Every Process has its own File Descriptor.
+
+Here i have "notepad" - application, when i start notepad , os will create file descriptor in memory.
+
+
+FD is a table contains information which maps to IO resources
+
+Integer value	Name	<unistd.h> symbolic constant[1]	<stdio.h> file stream[2]
+0	Standard input	STDIN_FILENO	stdin
+1	Standard output	STDOUT_FILENO	stdout
+2	Standard error	STDERR_FILENO	stderr
+
+FD is very simple array.
+
+IO operations and file Descriptors:
+....................................
+
+IO opertions can vary from reading data from the keyboard to reading data from disk files and network sockets.
+
+When y read data from the keyboard via FDS it is always done via 0th index of fd.
+
+Use case: 
+ I want to read data from the disk file.
+
+if you take any pl, who provides io apis. java.io package and apis 
+
+There are two apis
+
+1.High level api provided by language like java,c,c++..
+2.Low level api provided by os - windows,linux,unix,mac....
+
+Flow
+
+Programming language high level api-------> OS low level api------> File Descriptor----|HL
+
+When you read data from file,
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
