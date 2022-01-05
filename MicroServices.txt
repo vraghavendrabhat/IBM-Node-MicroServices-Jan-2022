@@ -1,0 +1,501 @@
+			Microservices on Node.js using Javascript
+..............................................................................................
+
+Application Pattern:
+
+1.old style  -monolithic
+
+2.new style  -Microservices
+ 
+ Indepedant Development,Testing,deployment,Maintaince,Team but collabrate.
+.............................................................................................
+Monolith:
+
+-Technology first J2EE, Domain Next.
+
+
+Team: OMS - PM- More PLS
+1. DEV
+2. TESTING
+3. RELEASE
+4. OPERATIONS
+
+
+1.Req
+2.Design
+   High Level-UML,Database
+   Low level - Runtime,databases,tools......
+3.coding
+
+-Vendor-lock in : Mono-lithic
+   -DEV,TESTING,PRODUCTION.
+-Work flow is highly sequencial
+   Req -Complete
+   Dev
+   testing
+   Release
+   Production
+  Delay in delivery:Cost increased
+-Production cost was huge
+
+Data Centers
+ -need to purchase high powered servers - bare metal servers
+ 
+Cost:
+   -Hardware
+   -OS -Linux-Ubuntu
+   -Tools -Servers,databases etc....
+   -Matrix Hell -  Mapping software components in dev and Production..
+
+
+How to build enterprise jee based app.
+
+App  must support a variety of different clients including desktop browsers. 
+
+The application might also expose an API for 3rd parties to consume.
+
+It might also integrate with other applications via a message broker. 
+
+The application handles requests (HTTP requests and messages) by executing business logic; 
+
+accessing a database; 
+
+exchanging messages with other systems;
+
+and returning a HTML/JSON/XML response. 
+
+There are logical components corresponding to different functional areas of the application.
+
+............................................................................................
+
+IF App needs to talk to external systems like Message Brokers, other Systems like Main frames.
+
+RPC/RPI
+MOM
+Connectors Arch.
+
+BIZ LOGIC:
+
+1- Service Layer : isloate service layer into separate component
+
+ can be inside one app - one layer, that layer may run on different jvms -  distributed Arch.
+
+
+Layer :
+
+ Client ---- Web Layer  ----Service Layer ---- Repository Layer
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Packaging Model:
+ 
+WAR - Web archive
+EAR .
+
+Problems with Single JAR/WAR:
+
+1. Scalability
+ Vertical scablitity
+ Horzitional scability 
+
+2.Deployments
+    -Bare Metal Deployment
+
+////////////////////////////////////////////////////////////////////////////////////////////
+Monoloith distributed app development drabackbacks:
+
+-Time is taken for project delivery
+   -Requirements 
+   -High level design and low level design
+   -coding
+   -testing
+   -release
+   -production- live
+
+-Technology Stack and Vendor lock in
+   -You need to build the entire app using one technology or one vendor product
+    eg: J2EE, Oracle,Weblogic
+
+-Production and maintance cost
+  -You need to setup large data centers , you need to maintain them.
+
+Companies like amzon,netflix,google wanted to change the app development model.
+                                "Micro services"
+
+
+Micro services are architural model of req,dev,test,relase,production,maintaince different ways.
+    Continous req collecting
+    Continous dev
+    Continuous testing
+    Continuous release
+    Continuous deployment
+    Using rented data centers: Cloud
+
+-Domain First, Technology Next: Domain Driven Design.
+-No Vendor lock- Multi tech stack.
+-Indidual dev , deployment - orders is development ,tested,deployed,customers are developed,tested deployment.
+   -Parrel dev.
+-Automation -dev ops
+   release - CI 
+   deployment - Containerized - Docker..
+-Introduction of Cloud computing
+..............................................................................................
+
+How to start Building Microservices?
+
+
+Road Map :
+
+0.Tech Stack - Java,Javascript,Go,Python.....,Mixed
+1.Infrastructure
+ ->Framework 
+	SpringCloud,Vertx,Quarks....
+        Moleculer,StrongLoop....
+ ->Deployment
+      Cloud
+      Containers
+      Cloud + Containers
+ ->Management tools
+     metrics
+     loggers
+     tracing
+ ->Integration
+	api gateway
+        message brokers
+        esb
+
+2.Development
+     -Coding
+  Development Infrastructure
+   Communication Patterns 
+          -HTTP,TCP,HTTP2,protobuf....
+          Brokers -  Message Brokers
+   Fault Managment
+   Transaction management
+   configuration management
+
+
+MicroService App  == { infrastructure  +   coding }
+
+.............................................................................................
+				What any software offers to users
+			    (What microservice software offers to users)
+
+                                         "Data"
+                                       
+..............................................................................................
+
+How to expose data to users?
+
+      "API"  ---------Application Programming interface
+..............................................................................................
+
+How to design / implement API?
+
+      "Object" - Object encapsulate API
+
+Object is represented as "Service" - Service Design
+..............................................................................................
+
+API Design Types in Web:
+........................
+
+1.REST API
+
+2.GRAPHQL API
+
+3.RPC
+   Regular api which to be called via tcp or local method call
+  gRPC is most popular rpc implementations
+..............................................................................................
+				 Microservices Implementation
+
+
+
+Progressive microservices framework for Node.js
+
+Moleculer is framework which has implemented most of common microservices design patterns.
+
+Moleculer features:
+
+1.Promise-based solution (async/await compatible)
+2.request-reply concept
+3.support event driven architecture with balancing
+4.built-in service registry & dynamic service discovery
+5.load balanced requests & events (round-robin, random, cpu-usage, latency, sharding)
+6.many fault tolerance features (Circuit Breaker, Bulkhead, Retry, Timeout, Fallback)
+7.plugin/middleware system
+8.support versioned services
+9.support Streams
+10.service mixins
+11.built-in caching solution (Memory, MemoryLRU, Redis)
+12.pluggable loggers (Console, File, Pino, Bunyan, Winston, Debug, Datadog, Log4js)
+13.pluggable transporters (TCP, NATS, MQTT, Redis, NATS Streaming, Kafka, AMQP 0.9, AMQP 1.0)
+14.pluggable serializers (JSON, Avro, MsgPack, Protocol Buffer, Thrift)
+15.pluggable parameter validator
+16.multiple services on a node/server
+17.master-less architecture, all nodes are equal
+18.parameter validation with fastest-validator
+19.built-in metrics feature with reporters (Console, CSV, Datadog, Event, Prometheus, StatsD)
+20.built-in tracing feature with exporters (Console, Datadog, Event, Jaeger, Zipkin)
+21.official API gateway, Database access and many other modules…
+
+Moleculer setup:
+
+project creations;
+
+1.from begining like normal node application.
+2.moleculer cli- to setup realtime project with all artifacts.
+
+npm install moleculer
+
+Core concepts in Molecular:
+..........................
+
+1.Service
+ A service is a simple JavaScript module containing some part of a complex application. 
+ A service represents a biz logic in your application.
+
+2.Service Broker : == Spring Container
+
+ Service Broker is the heart of Moleculer.
+
+It is responsible for management and communication between services (local and remote). 
+
+3.node :
+ A node is a simple OS process running on a local or external network.
+ A single instance of a node can host one or many services.
+ node js platform - v8+libvu..
+
+Each node must have an instance of Service Broker.
+
+"Service Broker is one single Node instance - Node runtime"
+
+4.Transporter
+	Transporter is a communication bus that services use to exchange messages. 
+ It transfers events, requests and responses.
+
+5.Gateway
+     API Gateway exposes Moleculer services to end-users.
+ The gateway is a regular Moleculer service running a (HTTP, WebSockets, etc.) server. It handles the incoming requests, maps them into service calls, and then returns appropriate responses.
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Services:
+
+1.HTTP services
+   Services are exposed for outsideworld
+
+2.Back end services- rpc
+   Services are used to encasulate biz logics like database operations,any biz
+
+
+
+service names and file names:
+
+math.service.js
+hello.service.js
+
+
+Use case 1: how to create ServiceBroker object
+
+const { ServiceBroker } = require("moleculer")
+
+//create broker object
+const broker = new ServiceBroker();
+
+node services/helloworld.service.js
+[2022-01-05T10:15:46.973Z] INFO  laptop-r2tggfdl-12456/BROKER: Moleculer v0.14.18 is starting...
+[2022-01-05T10:15:46.976Z] INFO  laptop-r2tggfdl-12456/BROKER: Namespace: <not defined>
+[2022-01-05T10:15:46.976Z] INFO  laptop-r2tggfdl-12456/BROKER: Node ID: laptop-r2tggfdl-12456
+[2022-01-05T10:15:46.977Z] INFO  laptop-r2tggfdl-12456/REGISTRY: Strategy: RoundRobinStrategy
+[2022-01-05T10:15:46.978Z] INFO  laptop-r2tggfdl-12456/REGISTRY: Discoverer: LocalDiscoverer
+[2022-01-05T10:15:46.987Z] INFO  laptop-r2tggfdl-12456/BROKER: Serializer: JSONSerializer
+[2022-01-05T10:15:47.000Z] INFO  laptop-r2tggfdl-12456/BROKER: Validator: FastestValidator
+[2022-01-05T10:15:47.002Z] INFO  laptop-r2tggfdl-12456/BROKER: Registered 13 middleware(s).
+[2022-01-05T10:15:47.023Z] INFO  laptop-r2tggfdl-12456/$NODE: Service '$node' stopped.
+[2022-01-05T10:15:47.024Z] INFO  laptop-r2tggfdl-12456/BROKER: ServiceBroker is stopped. Good bye.
+
+How to expose service ?
+
+
+const { ServiceBroker } = require("moleculer")
+
+//create broker object
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: 'hello',
+    //api
+    actions: {
+        sayHello() {
+            return 'Hello Moleculer!'
+        }
+    }
+})
+
+
+
+//start the service broker
+async function main() {
+    // broker.start()
+    //     .then(() => {
+    //         console.log('Service Broker is ready')
+    //     })
+    //     .catch(err => console.log(err))
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //invoke service api
+        const res = await broker.call('hello.sayHello');
+        console.log(res);
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+..
+
+multiple methods on single service
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: 'greeter',
+    //multiple apis
+    actions: {
+        sayHello() {
+            return 'Hello Moleculer!'
+        },
+        sayHai() {
+            return 'Hai Moleculer!'
+        },
+        sayGreet() {
+            return 'Greet Moleculer!'
+        }
+    }
+})
+
+
+//start the service broker
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //invoke service api
+        const hello = await broker.call('greeter.sayHello');
+        const hai = await broker.call('greeter.sayHai');
+        const greet = await broker.call('greeter.sayGreet');
+        console.log(hello, hai, greet);
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+............................................................
+Multiple services
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: 'greeter',
+    actions: {
+        sayGreet() {
+            return 'Greet Moleculer!'
+        }
+    }
+})
+broker.createService({
+    name: 'hello',
+    actions: {
+        sayHello() {
+            return 'Hello Moleculer!'
+        }
+    }
+})
+broker.createService({
+    name: 'hai',
+    actions: {
+        sayHai() {
+            return 'Hai Moleculer!'
+        }
+    }
+})
+
+
+//start the service broker
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //invoke service api
+        const hello = await broker.call('hello.sayHello');
+        const hai = await broker.call('hai.sayHai');
+        const greet = await broker.call('greeter.sayGreet');
+        console.log(hello, hai, greet);
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

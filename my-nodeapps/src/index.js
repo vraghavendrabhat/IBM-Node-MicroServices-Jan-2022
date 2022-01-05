@@ -1,16 +1,25 @@
-const fs = require('fs');
-const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser')
+const userRouter = require('./routes/users.route');
 
-console.log(__dirname)
-console.log(__filename)
-// const filePath = './src/assets/infowrite.txt';
-const filePath = path.join(__dirname,'assets/infowrite.txt')
-const options = {
-    encoding: 'utf-8'
-}
-const data = 'Hello,How are you';
+//create application object
+const app = express();
 
-fs.writeFile(filePath, data, options, err => {
-  if (err) throw err;
-  console.log(`data has been written into ${filePath}`)
+/// parse application/json
+app.use(bodyParser.json())
+
+//mount user router with app
+app.use("/api/users", userRouter)
+
+
+//routers
+app.get('/', (req, res) => {
+    res.json({
+        page: 'Home'
+    })
+})
+
+
+app.listen(3000, () => {
+    console.log('express server is running ')
 })
