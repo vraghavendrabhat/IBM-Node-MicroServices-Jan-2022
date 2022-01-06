@@ -1579,6 +1579,543 @@ async function main() {
     }
 }
 main();
+..............................................................................................
+				Third Party Transporters - NATS
+..............................................................................................
+
+Steps:
+1.You need to start NATS server.
+
+docker run -p 4222:4222 -ti nats:latest
+
+[1] 2022/01/06 07:19:10.871392 [INF] Starting nats-server
+[1] 2022/01/06 07:19:10.871437 [INF]   Version:  2.6.1
+[1] 2022/01/06 07:19:10.871441 [INF]   Git:      [c91f0fe]
+[1] 2022/01/06 07:19:10.871443 [INF]   Name:     NCOJMMJ5ZFGGJCSOEXXUEMZADUI77YB7S4VWT4EOWNJGT2WAIO7PEMXF
+[1] 2022/01/06 07:19:10.871448 [INF]   ID:       NCOJMMJ5ZFGGJCSOEXXUEMZADUI77YB7S4VWT4EOWNJGT2WAIO7PEMXF
+[1] 2022/01/06 07:19:10.871450 [INF] Using configuration file: nats-server.conf
+[1] 2022/01/06 07:19:10.872770 [INF] Starting http monitor on 0.0.0.0:8222
+[1] 2022/01/06 07:19:10.873004 [INF] Listening for client connections on 0.0.0.0:4222
+[1] 2022/01/06 07:19:10.873228 [INF] Server is ready
+[1] 2022/01/06 07:19:10.873876 [INF] Cluster name is LFuhJM7C7EQmvlrZqxiEKQ
+[1] 2022/01/06 07:19:10.873900 [WRN] Cluster name was dynamically generated, consider setting one
+[1] 2022/01/06 07:19:10.873943 [INF] Listening for route connections on 0.0.0.0:6222
+
+
+2.Install nats driver in the applications
+npm install nats@1.4.12 --save 
+
+
+3.NATS transporter configuration in the broker.
+
+transporter: "nats://localhost:4222"
+..............................................................................................
+
+............................................................................................
+				 Service Inheritance
+...........................................................................................
+
+Objective:
+  -code sharing, common code inside a service, which can be shared/inherited into other services.
+
+Service inheritance comes into place.
+
+In molecular , a service can inherit many services - multi level, for multi level, molcular uses a concept called "mixins".
+
+mixins is a design pattern used in javascript to implement multi level inheritance like java uses interfaces.
+
+
+Use case:
+1.if you write any REST Controller.
+2.if you write database operations inside your service.
+etc...
+
+How to write services in a different file
+
+How to do inheritance(service mixins) - mixin means multilevel 
+
+services/parent1.service.js
+
+//Parent Service
+
+module.exports = {
+    name: 'hai',
+    actions: {
+        sayHai() {
+            return 'hai,From Parent';
+        }
+    }
+}
+
+services/parent2.service.js
+
+//Parent Service
+
+module.exports = {
+    name: 'hello',
+    actions: {
+        sayHello() {
+            return 'Hello,From Parent';
+        }
+    }
+}
+
+services/child.service.js
+
+const { ServiceBroker } = require('moleculer');
+const HelloService = require("./parent1.service")
+const HaiService = require("./parent2.service")
+
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: "greeter",
+    mixins: [HelloService, HaiService], //inheritance
+    actions: {
+        sayGreet() {
+            return 'Greet,From child'
+        }
+    }
+})
+
+
+async function main() {
+    try {
+        await broker.start()
+        broker.repl();
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+}
+main();
+
+.............................................................................................
+				 Life Cycle Methods
+.............................................................................................
+
+Life cycle methods are called  automatically by moleculer.
+
+Types of Life cycle methods
+
+1.broker cycle methods
+   are called during broker startup,running,ending
+2.service cycle methods
+   are called during service creation,startup,running,ending...
+
+
+Broker Life Cycle Methods
+
+created,started,stopped,merged
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    //broker life cycle api
+    async created() {
+        console.log('broker is created')
+    },
+    async started() {
+        console.log('broker is started')
+        //await this.db.connect();
+    },
+    async stopped() {
+        console.log('broker has been stopped');
+        //await this.db.disconnect()
+    },
+    //merged call for modififying service information before publish
+    merged(schema) {
+        console.log('broker merge process');
+        console.log(schema)
+        // Modify the service settings
+        //schema.settings.myProp = "myValue";
+        // Modify the param validation schema in an action schema
+        // schema.actions.find.params.offset = "number";
+    }
+
+});
+
+broker.createService({
+    name: 'hello',
+    //api
+    actions: {
+        sayHello() {
+            return 'Hello Moleculer!'
+        }
+    }
+})
+
+
+
+//start the service broker
+async function main() {
+    try {
+        await broker.start()
+        broker.repl();
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+....
+
+Service Life Cycle Methods:
+...........................
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    //broker life cycle api
+    async created() {
+        console.log('broker is created')
+    },
+    async started() {
+        console.log('broker is started')
+        //await this.db.connect();
+    },
+    async stopped() {
+        console.log('broker has been stopped');
+        //await this.db.disconnect()
+    },
+    //merged call for modififying service information before publish
+    merged(schema) {
+        console.log('broker merge process');
+        console.log(schema)
+        // Modify the service settings
+        //schema.settings.myProp = "myValue";
+        // Modify the param validation schema in an action schema
+        // schema.actions.find.params.offset = "number";
+    }
+
+});
+
+broker.createService({
+    name: 'hello',
+    //api
+    actions: {
+        sayHello() {
+            return 'Hello Moleculer!'
+        }
+    },
+    //Service life cycles
+    created() {
+        // Fired when the service instance created (with `broker.loadService` or `broker.createService`)
+        console.log('Service is created')
+    },
+
+    merged() {
+        // Fired after the service schemas merged and before the service instance created
+        console.log('Service is merged')
+
+    },
+
+    async started() {
+        // Fired when broker starts this service (in `broker.start()`)
+        console.log('Service is started')
+
+    },
+    async stopped() {
+        // Fired when broker stops this service (in `broker.stop()`)
+        console.log('Service is Stopped')
+
+    }
+})
+
+
+
+//start the service broker
+async function main() {
+    try {
+        await broker.start()
+        broker.repl();
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..............................................................................................
+				Service Dependency
+..............................................................................................
+
+Context:
+ if you want to intialize the service, before that i want to initalize the other Services.
+
+for eg:
+ i have two services a, b
+
+ if a service depends on b, b has to be loaded before a .
+
+module.exports = {
+  name: "posts",
+  dependencies: [
+      "likes", // shorthand w/o version
+      "v2.auth", // shorthand w version
+      { name: "users", version: 2 }, // with numeric version
+      { name: "comments", version: "staging" } // with string version
+  ],
+  async started() {
+      this.logger.info("It will be called after all dependent services are available.");
+      const users = await this.broker.call("users.list");
+  }
+  ....
+}
+ 
+const { ServiceBroker } = require("moleculer")
+
+
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: 'likes',
+    actions: {
+        findAll() {
+            return 'likes'
+        }
+    },
+    async started() {
+        console.log('likes started')
+    },
+    created() {
+        console.log('likes is created')
+    },
+})
+
+broker.createService({
+    name: 'posts',
+    dependencies: ["likes"],
+    actions: {
+        findAll() {
+            return 'posts'
+        }
+    },
+    async started() {
+        console.log('posts started')
+    },
+    async created() {
+        console.log('posts created')
+    }
+})
+//start the service broker
+async function main() {
+    try {
+        await broker.start()
+        broker.repl();
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..............................................................................................
+				MicroService Communication Patterns
+
+
+Remote Procedure Invocation -
+     use an RPI-based protocol for inter-service communication
+ In Moleculer , Services are communicating via RPI pattern by default.
+
+Pattern: Messaging,Pattern: Event sourcing
+
+ events module in node.js, node js supports event driven arch by default.
+
+ Programs are communicated loosly via events, in moleculer programs can communicate across brokers via events.
+
+Communication in moleculer
+
+1.api calls/Service calls 
+    broker/ctx.call("servicename.api")
+
+2.api calls/service calls
+   via events
+
+Caller:
+  send events to callee or many callee
+
+Callee:
+ Listener who listens for event.
+.............................................................................................
+               Moleculer send and receives events via "Transporters"
+..............................................................................................
+
+Callee: Events Listeners
+
+   events: {
+        "order.created": {
+            handler(ctx) {
+                console.log("Payload:", ctx.params);
+                console.log("Sender:", ctx.nodeID);
+                console.log("Metadata:", ctx.meta);
+                console.log("The called event name:", ctx.eventName);
+            }
+        }
+    }
+   
+
+callee : Event emission
+
+ broker/ctx.emit("order.created",{order:{id:1,name:'test'}}) - one to one
+ broker/ctx.broadcast("order.created",{order:{id:1,name:'test'}}) - one to one
+
+
+services/remoteevent1.service.js
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    // nodeID:'mathServer',
+    transporter: "TCP"
+    // transporter: "nats://localhost:4222"
+});
+
+//caller
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params
+                //service communication via events
+                return ctx.emit('adder.add', { a, b })
+            }
+        }
+    }
+
+})
+
+
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+services/remoteevent2.service.js
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    transporter: "TCP"
+});
+
+//callee 
+broker.createService({
+    name: 'adder',
+    events: {
+        "adder.add": {
+            handler(ctx) {
+                console.log("Payload:", ctx.params);
+                console.log("Sender:", ctx.nodeID);
+                console.log("Metadata:", ctx.meta);
+                console.log("The called event name:", ctx.eventName);
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..........
+services/remoteeventmain.js
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    transporter: "TCP"
+});
+
+//caller
+broker.createService({
+    name: 'remotemain',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params
+                ctx.call('math.add', { a, b })
+            }
+        }
+    }
+
+})
+
+
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+
+Steps :
+ Start all services in three cmd prompt
+
+node services/remoteeventmain.service.js
+node services/remoteevent1.service.js
+node services/remoteevent2.service.js
+
+
+From remoteevent main
+$call remotemain.add --a 10 --b 800
+
+You can sees events are published in remote2.service.js console
+
+[2022-01-06T11:14:17.720Z] INFO  laptop-r2tggfdl-4284/REGISTRY: Node 'laptop-r2tggfdl-18936' reconnected.
+Payload: { a: 10, b: 20 }
+Sender: laptop-r2tggfdl-5868
+Metadata: { '$repl': true }
+The called event name: adder.add
+Payload: { a: 10, b: 80 }
+Sender: laptop-r2tggfdl-5868
+Metadata: { '$repl': true }
+The called event name: adder.add
+Payload: { a: 10, b: 800 }
+Sender: laptop-r2tggfdl-5868
+Metadata: { '$repl': true }
+The called event name: adder.add
+mol $
+..............................................................................................
+				Service : RESTFull WebServices
+.............................................................................................
+
+
+   
+
+
+
+
+
+
 
 
 
