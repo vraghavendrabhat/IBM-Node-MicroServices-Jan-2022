@@ -448,6 +448,1140 @@ async function main() {
 }
 main();
 
+..............................................................................................
+
+API Versions:
+
+/api/v1/customers
+
+/api/v2/customers
+
+Moleculer services can be versioned.
+
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: 'hello',
+    version: 1,
+    actions: {
+        sayHello() {
+            return `Hello V1`
+        }
+    }
+})
+broker.createService({
+    name: 'hello',
+    version: 2,
+    actions: {
+        sayHello() {
+            return `Hello V2`
+        }
+    }
+})
+
+
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //invoke service api
+        //versionNo.serviceName.serviceMethod
+        const helloV1 = await broker.call('v1.hello.sayHello');
+        const helloV2 = await broker.call('v2.hello.sayHello');
+        console.log(helloV1,helloV2)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..............................................................................................
+
+	Meta Data and actions -  actions types
+
+actions:
+  Are used to represent methods.
+
+Methods can be represented in two ways:
+
+Way -1:
+actions : {
+ 
+  sayHello(){
+     return 'hello'
+  }
+
+}
+Way-2: you can add meta information to a methods
+
+meta informations will discuss later.
+
+actions: {
+  
+  sayHello: {
+    
+       handler(){
+          
+          return 'Hello'
+           
+       } 
+  }
+
+} 
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+//way -1 writing actions
+
+// broker.createService({
+//     name: 'hello',
+//     version: 1,
+//     actions: {
+//         sayHello() {
+//             return `Hello V1`
+//         }
+//     }
+// })
+
+//way-2
+broker.createService({
+    name: 'hello',
+    version: 1,
+    actions: {
+        sayHello: {
+            //handler method
+            handler() {
+                return 'Hello'
+            }
+        },
+        sayHai: {
+            handler() {
+                return 'Hai'
+            }
+        },
+        sayGreet: {
+            handler() {
+                return 'Greet!'
+            }
+        }
+    }
+})
+
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //invoke service api
+        //versionNo.serviceName.serviceMethod
+        const hello = await broker.call('v1.hello.sayHello');
+        console.log(hello)
+        const hai = await broker.call('v1.hello.sayHai');
+        console.log(hai)
+        const greet = await broker.call('v1.hello.sayGreet');
+        console.log(greet)
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..............................................................................................
+
+					Args and Parameters
+
+
+Service apis can accept args, so that we can pass parameters.
+
+Parameters can be primtive values or objects,arrays.
+
+
+const hello = await broker.call('hello.sayHello',{name:'Subramanian'})
+
+-Parameters must be encapsulated inside object only - {name:'subramanian'}
+
+
+  actions: {
+        sayHai(obj) {
+            return 'Hai Moleculer!'
+        }
+    }
+
+  sayGreet: {
+            handler(obj) {
+                return 'Greet!'
+            }
+        }
+
+Context Object:
+..............
+-it is proxy object for broker meaning that, similar broker.
+-Most of the broker features are availble inside context object
+-Context objects are created by moleculer automatically.
+-We can grab context object reference inside actions method args
+-Using context 
+   -read parameters - ctx.params
+   -you can call other service methods -  service communication. ctx.call
+   -if you want to access broker information 
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+
+
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            handler(ctx) {
+                console.log(ctx.params);
+                return ctx.params.a + ctx.params.b
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        const result = await broker.call('math.add', { a: 10, b: 20 })
+        console.log(result)
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..............................................................................................
+				 Params Validation
+...........................................................................................
+
+Parameter Validation
+Validation middleware is used for Actions and Events parameter validation.
+
+Fastest Validator
+By default, Moleculer uses the fastest-validator library.
+
+Syntax : To enable validation:
+..............................
+
+  actions: {
+        hello: {
+            // Validator schema for params
+            params: {
+                name: { type: "string", min: 2 }
+            },
+            handler(ctx) {
+                return "Hello " + ctx.params.name;
+            }
+        }
+    }
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+
+
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                console.log(ctx.params);
+                return ctx.params.a + ctx.params.b
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        // const result = await broker.call('math.add', { a: '10', b: 20 })
+        const result = await broker.call('math.add', { a: 10, b: 20 })
+
+        console.log(result)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..............................................................................................
+				Async Services - Using Timer and Promises
+.............................................................................................
+
+const { ServiceBroker } = require("moleculer");
+
+const broker = new ServiceBroker();
+
+
+//async service
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            params: {
+                a: 'number',
+                b: 'number'
+            },
+            handler(ctx) {
+                //return promise
+                const { a, b } = ctx.params;
+                return new this.Promise((resolve, reject) => {
+                    setTimeout(resolve, 5000, (a + b))
+                })
+            }
+        }
+    }
+})
+
+
+async function main() {
+    //start the broker and deploy the service
+    try {
+        await broker.start()
+        //pass parameters
+        let response;
+        response = await broker.call('math.add', { a: 10, b: 10 });
+        console.log(response);
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+}
+
+
+main();
+..............................................................................................					 CommandLine Interactive Env
+..............................................................................................
+
+Moleculer REPL:
+...............
+REPL: READ Evaulate Print Loop:
+- interactive command line tool, used for testing application.
+
+node provides REPL
+node
+
+Moleculer provides REPL Prompt for testing services interactivly.
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+
+
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                console.log(ctx.params);
+                return ctx.params.a + ctx.params.b
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+when run the code,  you will get the following error
+
+The 'moleculer-repl' package is missing. Please install it with 'npm install moleculer-repl' command.
+[2022-01-06T05:10:49.028Z] ERROR laptop-r2tggfdl-10464/BROKER: The 'moleculer-repl' package is missing. Please install it with 'npm install moleculer-repl' command.
+[
+
+You need to install package in order to activate repl env.
+
+npm install moleculer-repl
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                console.log(ctx.params);
+                return ctx.params.a + ctx.params.b
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+
+node services/repl.service.js
+[2022-01-06T05:25:33.524Z] INFO  laptop-r2tggfdl-24436/BROKER: Moleculer v0.14.18 is starting...
+[2022-01-06T05:25:33.526Z] INFO  laptop-r2tggfdl-24436/BROKER: Namespace: <not defined>
+[2022-01-06T05:25:33.527Z] INFO  laptop-r2tggfdl-24436/BROKER: Node ID: laptop-r2tggfdl-24436
+[2022-01-06T05:25:33.530Z] INFO  laptop-r2tggfdl-24436/REGISTRY: Strategy: RoundRobinStrategy
+[2022-01-06T05:25:33.531Z] INFO  laptop-r2tggfdl-24436/REGISTRY: Discoverer: LocalDiscoverer
+[2022-01-06T05:25:33.537Z] INFO  laptop-r2tggfdl-24436/BROKER: Serializer: JSONSerializer
+[2022-01-06T05:25:33.548Z] INFO  laptop-r2tggfdl-24436/BROKER: Validator: FastestValidator
+[2022-01-06T05:25:33.550Z] INFO  laptop-r2tggfdl-24436/BROKER: Registered 13 middleware(s).
+[2022-01-06T05:25:33.565Z] INFO  laptop-r2tggfdl-24436/REGISTRY: '$node' service is registered.
+[2022-01-06T05:25:33.567Z] INFO  laptop-r2tggfdl-24436/REGISTRY: 'math' service is registered.
+[2022-01-06T05:25:33.568Z] INFO  laptop-r2tggfdl-24436/$NODE: Service '$node' started.
+[2022-01-06T05:25:33.568Z] INFO  laptop-r2tggfdl-24436/MATH: Service 'math' started.
+[2022-01-06T05:25:33.569Z] INFO  laptop-r2tggfdl-24436/BROKER: ✔ ServiceBroker with 2 service(s) is started successfully in 8ms.
+Service Broker is ready
+mol $ help
+
+  Commands:
+
+    help [command...]                                          Provides help for a given command.
+    q                                                          Exit application
+    actions [options]                                          List of actions
+    bench [options] <action> [jsonParams] [meta]               Benchmark a service
+    broadcast <eventName>                                      Broadcast an event
+    broadcastLocal <eventName>                                 Broadcast an event locally
+    cache keys [options]                                       List keys of cache entries
+    cache clear [pattern]                                      Clear cache entries
+    call [options] <actionName> [jsonParams] [meta]            Call an action
+    dcall [options] <nodeID> <actionName> [jsonParams] [meta]  Direct call an action
+    clear [pattern]                                            Clear cache entries
+    cls                                                        Clear console
+    destroy <serviceName> [version]                            Destroy a local service
+    emit <eventName>                                           Emit an event
+    env                                                        List of environment variables
+    events [options]                                           List of event listeners
+    info                                                       Information about broker
+    load <servicePath>                                         Load a service from file
+    loadFolder <serviceFolder> [fileMask]                      Load all services from folder
+    metrics [options]                                          List metrics
+    nodes [options]                                            List of nodes
+    services [options]                                         List of services
+
+mol $
+
+..........................
+
+List services,actions,info:
+.............................
+
+services
+╔═════════╤═════════╤══════════╤═════════╤════════╤═══════╗
+║ Service │ Version │    State │ Actions │ Events │ Nodes ║
+╟─────────┼─────────┼──────────┼─────────┼────────┼───────╢
+║ $node   │       - │    OK    │       7 │      0 │ 1     ║
+║ math    │       - │    OK    │       1 │      0 │ 1     ║
+╚═════════╧═════════╧══════════╧═════════╧════════╧═══════╝
+
+ actions
+╔════════════════╤═══════╤══════════╤════════╤═══════════════════════════════════════════════════════════════════════════╗
+║ Action         │ Nodes │ State    │ Cached │ Params                                                                    ║
+╟────────────────┼───────┼──────────┼────────┼───────────────────────────────────────────────────────────────────────────╢
+║ $node.actions  │ (*) 1 │    OK    │   No   │ onlyLocal, skipInternal, withEndpoints, onlyAvailable                     ║
+║ $node.events   │ (*) 1 │    OK    │   No   │ onlyLocal, skipInternal, withEndpoints, onlyAvailable                     ║
+║ $node.health   │ (*) 1 │    OK    │   No   │                                                                           ║
+║ $node.list     │ (*) 1 │    OK    │   No   │ withServices, onlyAvailable                                               ║
+║ $node.metrics  │ (*) 1 │    OK    │   No   │ types, includes, excludes                                                 ║
+║ $node.options  │ (*) 1 │    OK    │   No   │                                                                           ║
+║ $node.services │ (*) 1 │    OK    │   No   │ onlyLocal, skipInternal, withActions, withEvents, onlyAvailable, grouping ║
+╟────────────────┼───────┼──────────┼────────┼───────────────────────────────────────────────────────────────────────────╢
+║ math.add       │ (*) 1 │    OK    │   No   │ a, b                                                                      ║
+╚════════════════╧═══════╧══════════╧════════╧═══════════════════════════════════════════════════════════════════════════╝
+
+info
+
+=======================
+  General information
+=======================
+
+    CPU                      : Arch: x64, Cores: 12
+    Memory                   : [||||||-------------] 47.6 GB free
+    Heap                     : [-------------------] 15.9 MB
+    OS                       : win32 (Windows_NT)
+    IP                       : 192.168.48.1, 172.25.48.1, 192.168.0.105
+    Hostname                 : LAPTOP-R2TGGFDL
+
+    Node version             : v14.17.0
+    Moleculer version        : 0.14.18
+    Protocol version         : 4
+
+    Current time             : Thu Jan 06 2022 10:56:42 GMT+0530 (India Standard Time)
+
+======================
+  Broker information
+======================
+
+    Namespace                : <None>
+    Node ID                  : laptop-r2tggfdl-24436
+    Services                 : 2
+    Actions                  : 8
+    Events                   : 0
+
+    Strategy                 : RoundRobinStrategy
+    Cacher                   : <None>
+
+==================
+  Broker options
+==================
+
+    namespace                : ""
+    logger                   : true
+    requestTimeout           : 0
+    retryPolicy
+      enabled                : false
+      retries                : 5
+      delay                  : 100
+      maxDelay               : 1000
+      factor                 : 2
+      check                  : [Function check]
+    contextParamsCloning     : false
+    maxCallLevel             : 0
+    heartbeatInterval        : 10
+    heartbeatTimeout         : 30
+    tracking
+      enabled                : false
+      shutdownTimeout        : 5000
+    disableBalancer          : false
+    registry
+      strategy               : "RoundRobin"
+      preferLocal            : true
+    circuitBreaker
+      enabled                : false
+      threshold              : 0.5
+      windowTime             : 60
+      minRequestCount        : 20
+      halfOpenTime           : 10000
+      check                  : [Function check]
+    bulkhead
+      enabled                : false
+      concurrency            : 10
+      maxQueueSize           : 100
+    transit
+      maxQueueSize           : 50000
+      maxChunkSize           : 262144
+      disableReconnect       : false
+      disableVersionCheck    : false
+    validator                : true
+    metrics                  : false
+    tracing                  : false
+    internalServices         : true
+    internalMiddlewares      : true
+    dependencyInterval       : 1000
+    hotReload                : false
+    metadata
+    skipProcessEventRegistration: false
+
+mol $
+
+Service calls using Repl:
+.........................
+
+call math.add --a 10 --b 20
+>> Call 'math.add' with params: { a: 10, b: 20 }
+{ a: 10, b: 20 }
+>> Execution time:4ms
+>> Response:
+30
+mol $ call math.add --a 10 --b 50
+>> Call 'math.add' with params: { a: 10, b: 50 }
+{ a: 10, b: 50 }
+>> Execution time:1ms
+>> Response:
+60
+mol $
+			..............................................................................................
+				Methods Types
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Service Methods:
+
+1.public methods
+    methods are accssiable outside 
+2.private methods
+  methods are not accssible outside
+  methods are used to isloate complex logic from public methods.
+
+
+public methods:
+ any thing if you write inside actions are called public methods.
+
+actions { 
+
+
+}
+
+private methods:
+
+createService({
+
+ //public methods
+ actions: {
+
+ },
+
+ //private methods
+ methods: {
+
+
+ }
+
+})
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params;
+                return this.add(a,b)
+            }
+        }
+    },
+    //private methods cant be called outside
+    methods: {
+        add(a, b) {
+            return a + b;
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+..............................................................................................
+			MicroService Pattern language Implemenation
+.............................................................................................
+				Service Communications
+
+
+Types of services:
+
+1.local service
+   service which is implemented on single broker.
+2.remote service
+   Service which is implemented across the brokers.
+ 
+Services can communicate within service broker-single node arch
+Services can communicate across service brokers - multi node arch
+
+How services are interacting each other?
+
+ Using "Context" Object
+
+Actors:
+
+ 1.Caller service, who is calling /consuming other services
+
+ 2.Callee service, who is called by others
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+//caller
+broker.createService({
+    name: 'math',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params
+                //service communication
+                // ctx.call('adder.add',{a:a,b:b})
+                return ctx.call('adder.add', { a, b })
+            }
+        }
+    }
+
+})
+
+//callee 
+
+broker.createService({
+    name: 'adder',
+    actions: {
+        add: {
+            params: {
+                a: "number",
+                b: "number"
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params;
+                return `Adder => ${a + b}`;
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+.............................................................................................
+				  Remote Service Communication
+.............................................................................................
+
+Microservices are loosly coupled services, runs indendently, how do they communicate
+
+Remote Services
+-Services are located across the nodes.
+-nodes can be the same machine or different machines, or cloud.
+
+Run three services in a different node.
+
+node services/remote1.service.js
+
+node services/remote2.service.js
+
+node services/remotemain.service.js
+
+
+
+
+remote1.service.js
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+//callee 
+broker.createService({
+    name: 'adder',
+    actions: {
+        add: {
+            params: {
+                a: "number",
+                b: "number"
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params;
+                return `Adder => ${a + b}`;
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+remote2.service.js
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+//callee 
+broker.createService({
+    name: 'adder',
+    actions: {
+        add: {
+            params: {
+                a: "number",
+                b: "number"
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params;
+                return `Adder => ${a + b}`;
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+remotemain.service.js
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker();
+
+//caller
+broker.createService({
+    name: 'remotemain',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params
+                return ctx.call('math.add', { a, b })
+            }
+        }
+    }
+
+})
+
+
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+
+Steps:
+
+Open three cmd prompt
+
+node services/remote1.service.js
+
+node services/remote2.service.js
+
+node services/remotemain.service.js
+
+
+After Running you will get error like below
+
+
+call remotemain.add --a 10 --b 20
+>> Call 'remotemain.add' with params: { a: 10, b: 20 }
+[2022-01-06T06:44:49.315Z] WARN  laptop-r2tggfdl-12892/BROKER: Service 'math.add' is not registered.
+>> ERROR:
+ServiceNotFoundError: Service 'math.add' is not found.
+    at ServiceBroker.findNextActionEndpoint (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\service-broker.js:1072:13)
+    at ServiceBroker.call (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\service-broker.js:1121:26)
+    at Context.call (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\context.js:286:23)
+    at Service.handler (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\services\remotemain.service.js:16:28)
+    at E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\utils.js:212:22
+    at processCheckResponse (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\validators\base.js:63:29)
+    at validateContextParams (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\validators\base.js:88:15)
+    at ServiceBroker.timeoutMiddleware (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\middlewares\timeout.js:31:14)
+    at ServiceBroker.fallbackMiddleware (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\middlewares\fallback.js:31:11)
+    at ServiceBroker.errorHandlerMiddleware (E:\session\IBM\2022\jan\Nodejs-MicroServices\my-microservice\node_modules\moleculer\src\middlewares\error-handler.js:14:10)
+Data:  { action: 'math.add' }
+
+Why the above error?
+
+-Service not able to locate the other service, since other services are running in different 
+nodes
+..............................................................................................
+				 Networking 
+..............................................................................................
+
+
+In order to enable Remote Service communications , we need Transporters
+
+Transporter is a channel and bridge layer among services.
+
+
+In order to enable Remote Service communications , we need Message Brokers 
+
+
+Transporters:
+
+-Transporter is an important module if you are running services on multiple nodes. 
+
+-Transporter communicates with other nodes. 
+
+-It transfers events, calls requests and processes responses …etc. 
+
+-If a service runs on multiple instances on different nodes, the requests will be load-balanced among live nodes.
+
+
+What can be transporter?
+
+ A Transporter is thrid party software through which only we interact.
+
+Transports:
+............
+
+Built-in transporters
+
+TCP transporter
+NATS Transporter
+Redis Transporter
+MQTT Transporter
+AMQP Transporter
+Kafka Transporter
+NATS Streaming (STAN) Transporter
+
+..............................................................................................
+
+TCP transporter:
+
+This is a no-dependency, zero-configuration TCP transporter. It uses Gossip protocol to disseminate node statuses, service list and heartbeats. It contains an integrated UDP discovery feature to detect new and disconnected nodes on the network.
+
+If the UDP is prohibited on your network, use urls option. It is a list of remote endpoints (host/ip, port, nodeID). It can be a static list in your configuration or a file path which contains the list.
+
+Use case :How to use TCP transport as channel for service Communications.
+
+We need to configure Service Broker to enable transpoert.
+
+ServiceBroker object creation:
+
+const broker = new ServiceBroker();
+ Here we have not passed any parameter to ServiceBroker Constructor, if you dont, the default parameters will be passed.
+
+Service Broker Parameters are called as "ServiceBroker Schema"
+
+We can override service Broker Schema to enable broker vide features.
+
+Transporter Configuration:
+..........................
+
+
+
+remote1.service.js
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    transporter: "TCP"
+});
+
+//callee 
+broker.createService({
+    name: 'adder',
+    actions: {
+        add: {
+            params: {
+                a: "number",
+                b: "number"
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params;
+                return `Adder => ${a + b}`;
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+remote2.service.js
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    transporter: "TCP"
+});
+
+//callee 
+broker.createService({
+    name: 'adder',
+    actions: {
+        add: {
+            params: {
+                a: "number",
+                b: "number"
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params;
+                return `Adder => ${a + b}`;
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+remotemain.service.js
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    transporter: "TCP"
+});
+
+//caller
+broker.createService({
+    name: 'remotemain',
+    actions: {
+        add: {
+            params: {
+                a: { type: 'number' },
+                b: 'number'
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params
+                return ctx.call('math.add', { a, b })
+            }
+        }
+    }
+
+})
+
+
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+.............................................................................................
+				Node Information
+..............................................................................................
+				
+Node ID: laptop-r2tggfdl-14884
+
+  In Moleculer , every node is identified by unique name, called node,Id, by default NodeId
+can be "machine Name"-ProcessId
+
+
+const { ServiceBroker } = require("moleculer")
+
+const broker = new ServiceBroker({
+    transporter: "TCP"
+});
+
+//callee 
+broker.createService({
+    name: 'adder',
+    actions: {
+        add: {
+            params: {
+                a: "number",
+                b: "number"
+            },
+            handler(ctx) {
+                const { a, b } = ctx.params;
+                return `${broker.nodeID} => ${a + b}`;
+            }
+        }
+    }
+})
+async function main() {
+
+    try {
+        await broker.start()
+        console.log('Service Broker is ready')
+        //start your application in repl prompt.
+        broker.repl();
+    } catch (error) {
+        console.log(error)
+    }
+}
+main();
+
+
+
 
 
 
